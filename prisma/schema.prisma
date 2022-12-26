@@ -50,6 +50,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   seed          Seed[]
+  likes Like[]
 }
 
 model VerificationToken {
@@ -70,4 +71,20 @@ model Seed {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  likes Like[]
+}
+
+model Like {
+  id            String    @id @default(cuid())
+
+  seed Seed @relation(fields: [seedId], references: [id])
+  seedId String
+
+  user User @relation(fields: [userId], references: [id])
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([seedId, userId])
 }
