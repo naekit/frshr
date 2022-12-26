@@ -1,13 +1,11 @@
 import { z } from "zod";
 import { protectedProcedure, router } from "../trpc";
+import { seedSchema } from '../../../components/PlantSeed';
 
 
 export const seedRouter = router({
-    create: protectedProcedure.input(z.object({
-        text: z.string({
-            required_error: 'Tweet Text is required',
-        }),
-    })).mutation(({ctx, input}) => {
+    create: protectedProcedure.input(seedSchema)
+    .mutation(({ctx, input}) => {
         const { prisma, session } = ctx;
         const { text } = input;
         const userId = session.user.id

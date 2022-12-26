@@ -4,10 +4,10 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { trpc } from "../utils/trpc";
+import { Garden } from "../components/Garden";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
-
   return (
     <>
       <Head>
@@ -16,8 +16,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <button onClick={() => signIn()}>Login</button>
-        {JSON.stringify(session)}
+        <Garden />
       </div>
     </>
   );

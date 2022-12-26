@@ -27,6 +27,7 @@
     "zod": "^3.18.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/node": "^18.11.17",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
@@ -44,5 +45,8 @@
   },
   "ct3aMetadata": {
     "initVersion": "6.11.4"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }
