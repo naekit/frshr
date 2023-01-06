@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { object, string } from "zod";
 import { trpc } from "../utils/trpc";
 
@@ -11,7 +11,16 @@ export const seedSchema = object({
 export function PlantSeed(){
     const [text, setText] = useState('')
     const [error, setError] = useState('')
-    const { mutateAsync } = trpc.seed.create.useMutation()
+    
+    const utils = trpc.useContext()
+
+    const { mutateAsync } = trpc.seed.create.useMutation({
+        onSuccess: () => {
+            setText("")
+            utils.seed.garden.invalidate();
+        }
+    })
+
 
     async function handleSubmit(event){
         event.preventDefault();
@@ -28,7 +37,7 @@ export function PlantSeed(){
         <>
         {error && JSON.stringify(error)}        
         <form onSubmit={handleSubmit} className="w-full flex flex-col border-2 p-4 rounded-md mb-4">
-            <textarea className="shadow p-4 w-full" onChange={(event) => setText(event?.target.value)} />
+            <textarea value={text} className="shadow p-4 w-full" onChange={(event) => setText(event?.target.value)} />
             <div className="mt-4 flex justify-end">
                 <button className="bg-primary text-white px-4 py-2 rounded-md" type="submit">
                     Seed
